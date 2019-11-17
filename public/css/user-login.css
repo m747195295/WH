@@ -1,0 +1,23 @@
+html {
+    height: 100%;
+}
+
+body{
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    background: url('../img/bz.jpg') no-repeat;
+}
+
+.user-login {
+    width: 100%;
+    width: 400px;
+    margin: 0 auto;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.to-register{
+    text-decoration: none;
+}

@@ -1,0 +1,42 @@
+html {
+    height: 100%;
+    font-size: 1rem;
+}
+body{
+    margin: 0;
+    padding: 0;
+
+}
+.MZ-header{
+    width: 100%;   
+    height: 80px;
+}
+.MZ-header-logo{
+    display: inline-block;
+    width: 30%;
+}
+.MZ-header-menu{
+    display: inline-block;
+    width: 34%;
+}
+.menu{
+    display: flex;
+    justify-content: space-around;
+}
+.menu li{
+    list-style: none;
+    cursor: pointer;
+}
+.MZ-header-find{
+    display: inline;
+}
+.MZ-header-find input{
+    height: 30px;
+    width: 170px;
+    border-radius: 20px;
+    border: 1px solid #999;
+    text-indent: 1rem;
+}
+.MZ-header-find a{
+    text-decoration: none;
+}

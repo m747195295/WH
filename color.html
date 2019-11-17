@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>manage</title>
+    <link rel="stylesheet" type="text/css" href="public/css/easyui.css">
+    <link rel="stylesheet" type="text/css" href="public/css/icon.css">
+    <link rel="stylesheet" href="public/css/user-login.css">
+</head>
+
+<body>
+    <div class="easyui-layout" style="width:80%;height:500px;margin: 0 auto;">
+        <div data-options="region:'north'" style="height:50px;background-color: #777;">
+            <h3>后台管理</h3>
+        </div>
+        <div data-options="region:'south',split:true" style="height:50px;"></div>
+        <div data-options="region:'east',split:true" title="相关资料" style="width:100px;"></div>
+        <div data-options="region:'west',split:true" title="用户管理" style="width:100px;">
+            <div id="sm" class="easyui-sidemenu" data-options="data:data">
+            </div>
+            <!-- <div id="sm" style="width:300px"></div> -->
+        </div>
+        <div data-options="region:'center',title:'用户信息管理',iconCls:'icon-ok'">
+            <iframe id="IDcolor" name="IDcolor" src="" frameborder="0">
+                <table class="easyui-datagrid">
+                    <thead>
+                        <!-- 列表 -->
+                        <table id="dg" title="商品颜色" class="easyui-datagrid" style="width:100%;height:99%"
+                            url="get_users.php" toolbar="#toolbar" rownumbers="true" fitColumns="true"
+                            singleSelect="true">
+                        </table>
+
+                        <!-- 列表上的选项 -->
+                        <div id="toolbar">
+                            <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true"
+                                onclick="newUser()">新增</a>
+                            <a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true"
+                                onclick="editUser()">修改</a>
+                            <a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true"
+                                onclick="destroyUser()">删除</a>
+                        </div>
+
+                        <!-- 创建对话框（共用） -->
+                        <div id="dlg" class="easyui-dialog" style="width:400px;height:280px;padding:10px 20px"
+                            closed="true" buttons="#dlg-buttons">
+                            <form id="fm" method="post" novalidate>
+                                <input type="hidden" name="id" />
+                                <div class="fitem">
+                                    <label>用户名:</label>
+                                    <input name="name" class="easyui-textbox" required="true">
+                                </div>
+                                <div class="fitem">
+                                    <label> 密 码 :</label>
+                                    <input name="password" class="easyui-textbox" required="true">
+                                </div>
+                                <div class="fitem">
+                                    <label> 备 注 :</label>
+                                    <input name="remark" class="easyui-textbox">
+                                </div>
+                            </form>
+                        </div>
+                        <div id="dlg-buttons">
+                            <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok"
+                                onclick="saveUser()" style="width:90px">保存</a>
+                            <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel"
+                                onclick="javascript:$('#dlg').dialog('close')" style="width:90px">取消</a>
+                        </div>
+
+                    </thead>
+                </table>
+            </iframe>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="public/js/jquery.min.js"></script>
+    <script type="text/javascript" src="public/js/jquery.easyui.min.js"></script>
+    <script>
+        $(function () {
+            $('#dg').datagrid({
+                url: '/api/api/color/page',
+                // 分页默认为false
+                pagination: true,
+                pageList: [5, 9, 14, 20],
+                pageSize: 5,
+                // autoRowHeight:false,
+                // rownumbers:true,
+                columns: [{
+                        // field(对应数据库的名字)
+                        field: 'colorName',
+                        title: '商品颜色',
+                        width: 30
+                    },
+                    {
+                        field: 'colorValue',
+                        title: '商品颜色值',
+                        width: 30
+                    }
+                ],
+                loadFilter: function (data) {
+                    // 将数据库的数据返回到页面，如果没有就返回空数组
+                    return data.data || [];
+                }
+            })
+
+            var opts = $('#sm').sidemenu('options');
+            opts.onSelect = function (item) {
+                console.log(item);
+                if (item.text == '商品颜色') {
+                    
+                }
+            }
+
+
+        });
+
+        var data = [{
+            text: '商品管理',
+            iconCls: 'icon-sum',
+            state: 'open',
+            children: [{
+                text: '商品'
+            }, {
+                text: '商品颜色'
+            }, {
+                text: '商品名称'
+            }]
+        }];
+    </script>
+</body>
+
+</html>

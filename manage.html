@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>manage</title>
+    <link rel="stylesheet" type="text/css" href="public/css/easyui.css">
+    <link rel="stylesheet" type="text/css" href="public/css/icon.css">
+    <link rel="stylesheet" href="public/css/user-login.css">
+</head>
+
+<body>
+    <div class="easyui-layout" style="width:80%;height:500px;margin: 0 auto;">
+        <div data-options="region:'north'" style="height:50px;background-color: #777;">
+            <h3>后台管理</h3>
+        </div>
+        <div data-options="region:'south',split:true" style="height:50px;"></div>
+        <div data-options="region:'east',split:true" title="相关资料" style="width:100px;"></div>
+        <div data-options="region:'west',split:true" title="用户管理" style="width:100px;">
+            <div id="sm" class="easyui-sidemenu" data-options="data:data">
+            </div>
+
+            <!-- <div id="sm" style="width:300px"></div> -->
+        </div>
+        <div data-options="region:'center',title:'用户信息管理',iconCls:'icon-ok'">
+                <iframe id='IDgoods' name='IDgoods' src="./test1.html" frameborder="0" width="1336px" height="369px">
+                </iframe>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="public/js/jquery.min.js"></script>
+    <script type="text/javascript" src="public/js/jquery.easyui.min.js"></script>
+    <script>
+        $(function () {
+            $('#dg').datagrid({
+                url: '/api/api/goods/page',
+                // 分页默认为false
+                pagination: true,
+                pageList: [5, 9, 14, 20],
+                pageSize: 5,
+                // autoRowHeight:false,
+                // rownumbers:true,
+                columns: [
+                    [{
+                            // field(对应数据库的名字)
+                            field: 'name',
+                            title: '商品型号',
+                            width: 30
+                        },
+                        {
+                            field: 'type',
+                            title: '类型',
+                            width: 30
+                        },
+                        {
+                            field: 'price',
+                            title: '价格',
+                            width: 30
+                        },
+                        {
+                            field: 'saleInfo',
+                            title: '概述',
+                            width: 30
+                        },
+                        {
+                            field: 'isNew',
+                            title: '新品',
+                            width: 30
+                        },
+                        {
+                            field: 'isSale',
+                            title: '促销',
+                            width: 30,
+                            // align: 'left',
+                        }
+                    ]
+                ],
+                loadFilter: function (data) {
+                    // 将数据库的数据返回到页面，如果没有就返回空数组
+                    return data.data || [];
+                }
+            })
+            var opts = $('#sm').sidemenu('options');
+            opts.onSelect = function (item) {
+                console.log(item);
+                if (item.text == '商品颜色') {
+                    $("#IDgoods").attr('src', './test1.html')
+                }
+            }
+
+
+        });
+
+        var data = [{
+            text: '商品管理',
+            iconCls: 'icon-sum',
+            state: 'open',
+            children: [{
+                text: '商品'
+            }, {
+                text: '商品颜色'
+            }, {
+                text: '商品名称'
+            }]
+        }];
+    </script>
+</body>
+
+</html>

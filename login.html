@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>登录</title>
+    <link rel="stylesheet" type="text/css" href="public/css/easyui.css">
+    <link rel="stylesheet" type="text/css" href="public/css/icon.css">
+    <link rel="stylesheet" href="public/css/user-login.css">
+</head>
+<body>
+    <div class="user-login" id="user-login">
+        <div class="easyui-panel" title="账号登录" style="width:100%;max-width:400px;padding:30px 60px;">
+            <form id="ff" method="post">
+                <div style="margin-bottom:20px">
+                    <input class="easyui-textbox" id='user_name' name="Username" style="width:100%"
+                        data-options="label:'账户:',required:true">
+                </div>
+                <div style="margin-bottom:20px">
+                    <input class="easyui-passwordbox" id="user_ps" name="Password" style="width:100%"
+                        data-options="label:'密码:',required:true">
+                </div>
+            </form>
+            <form id="ffs">
+                    <div style="margin-bottom:20px">
+                        <input class="easyui-checkbox" name="fruit" value="Apple" label="记住密码:">
+                        <span style="margin-left:110px">
+                            <a href="javascript:;" id="to-register" class="to-register" onclick="to_register()">立即注册</a>
+                        </span>
+                        
+                    </div>
+                </form>
+            
+            <div style="text-align:center;padding:5px 0">
+                <a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitForm()" style="width:80px">登录</a>
+                <a href="javascript:void(0)" class="easyui-linkbutton" onclick="clearForm()" style="width:80px">清空</a>
+            </div>
+        </div>
+    </div>
+    <div class="user-login" id="user-register">
+        <div class="easyui-panel" title="账号注册" style="width:100%;max-width:400px;padding:30px 60px;">
+            <form id="dd" method="post">
+                <div style="margin-bottom:20px">
+                    <input class="easyui-textbox" name="reUsername" style="width:100%"
+                        data-options="label:'账户:',required:true">
+                </div>
+                <div style="margin-bottom:20px">
+                    <input class="easyui-passwordbox" name="rePassword" style="width:100%"
+                        data-options="label:'密码:',required:true">
+                </div>
+                <div style="margin-bottom:20px">
+                    <input class="easyui-passwordbox" name="rePasswords" style="width:100%"
+                        data-options="label:'重复密码:',required:true">
+                </div>
+            </form>
+            <div>
+                <a href="javascript:;" id="to-register" class="to-login" onclick="to_login()">立即登录</a>
+            </div>
+            <div style="text-align:center;padding:5px 0">
+                <a href="javascript:void(0)" class="easyui-linkbutton" onclick="ResubmitForm()"
+                    style="width:80px">注册</a>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="public/js/jquery.min.js"></script>
+    <script type="text/javascript" src="public/js/jquery.easyui.min.js"></script>
+    <script>
+        // 点击切换隐藏(登录、注册)
+            $(function(){
+            $('#user-register').hide();
+        })
+        function to_register() {
+            $('#user-login').hide();
+            $('#user-register').show();
+        }
+
+        function to_login() {
+            $('#user-login').show();
+            $('#user-register').hide();
+        }
+        // 登录提交方式
+        function submitForm(){
+            $('#ff').form('submit',{
+                url:'/api/api/L1login',
+                success:function(data){
+                    console.log(data)
+                    var json = JSON.parse(data);
+                    $.messager.show({
+                        title: '消息提示',
+                        msg: json.message,
+                        showType: 'show'
+                    })
+                    // console.log(data)
+                    if(json.code==1001){
+                        // window.location.href='/user';
+                        setTimeout("javascript:location.href='manage.html'", 1000);
+                    }
+                }
+            })
+        }
+        function clearForm() {
+            $('#ff').form('clear');
+        }
+
+        // 提交方式(注册)
+        function ResubmitForm() {
+            // var re1 = document.getElementsByName("rePassword")[0].value;
+            var re1=$("input[name='rePassword']").val();
+            // var re2 = document.getElementsByName("rePasswords")[0].value;
+            var re2=$("input[name='rePasswords']").val();
+            if(re1 !==re2){
+                console.log('两次密码不一致')
+                return false;
+            }else{
+                $('#dd').form('submit', {
+                url: '/api/api/R1register',
+                success: function (data) {
+                    // console.log(typeof data)
+                    var json = JSON.parse(data);
+                    $.messager.show({
+                        title: '消息提示',
+                        msg: json.message,
+                        showType: 'show'
+                    })
+                }
+            });
+            }
+            
+        }
+
+        function clearForm() {
+            $('#dd').form('clear');
+        }
+    </script>
+
+
+
+</body>
+</html>
