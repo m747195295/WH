@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>首页</title>
-    <!-- <link rel="stylesheet" href="public/css/easyui.css"> -->
+    <link rel="stylesheet" href="public/css/easyui.css">
     <link rel="stylesheet" href="public/css/index.css">
     <link rel="stylesheet" href="public/css/join.css">
     <link rel="stylesheet" href="public/iconfont/iconfont.css">
@@ -14,11 +14,14 @@
 
 <body>
     <header>
+        <div id="slider" class="mui-slider">
+            <div class="mui-slider-group mui-slider-loop">
+            </div>
+        </div>
         <div id="MZ-header">
             <div class="MZ-header-logo">
                 <svg fill="#00b4ff" version="1.1" id="Logo" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
-                    width="402.048px" height="73.556px" viewBox="17.318 5.824 402.048 73.556"
-                    enable-background="new 17.318 5.824 402.048 73.556">
+                    viewBox="17.318 5.824 402.048 73.556" enable-background="new 17.318 5.824 402.048 73.556">
                     <path
                         d="M321.513,5.824H256.91v12.878h51.478l-49.294,44.581c-8.227,7.023-2.872,16.096,3.958,16.096h65.337V66.472 h-52.117l48.964-44.554C333.52,14.473,328.535,5.824,321.513,5.824">
                     </path>
@@ -35,8 +38,8 @@
                 </svg>
             </div>
             <div class="MZ-header-menu">
-                <ul class="menu">
-                    <li>手机</li>
+                <ul id="menu">
+                    <!-- <li>手机</li>
                     <li>声学</li>
                     <li>配件</li>
                     <li>生活</li>
@@ -44,12 +47,12 @@
                     <li>服务</li>
                     <li>专卖店</li>
                     <li>社区</li>
-                    <li>APP下载</li>
+                    <li>APP下载</li> -->
                 </ul>
             </div>
             <div class="MZ-header-find">
-                <input type="text" >
-                <a href=""><i class="iconfont">&#xe62b;</i></a>
+                <input type="text" placeholder="请输入关键字" />
+                <i class="iconfont">&#xe62b;</i>
             </div>
         </div>
     </header>
@@ -58,5 +61,55 @@
     <footer>
     </footer>
 </body>
+<script type="text/javascript" src="public/js/jquery.min.js"></script>
+<script src="public/js/fontSize.js"></script>
+<script src="public/js/mui.min.js"></script>
+<script>
+    // console.log($('#menu'))
+    const Omenu = ['手机', '声学', '配件', '生活', 'Flyme', '服务', '专卖店', '社区', 'APP下载']
+    // Omenu.forEach((item, inde) =>
+    //     $('#menu')[0].innerHTML += `<li>${item}</li>`
+    // )
+    Omenu.forEach((item, inde) =>
+        $("#menu").append( `<li>${item}</li>`)
+    )
+
+
+
+
+</script>
+<!-- <script>
+    // banner追加图片
+    var url = ['public/img/img1.jpg', 'public/img/img2.jpg'];
+    var len = url.length;
+    var oBanner = document.querySelector('.mui-slider-group');
+    var oBannerBiao = document.querySelector('.mui-slider-indicator')
+    url.forEach(function (item, index) {
+        oBanner.innerHTML += `<div class="mui-slider-item">
+    <a href="#">
+        <img src="${url[index]}">
+    </a>
+</div>`
+    });
+
+    var oBannerLi = oBanner.querySelectorAll('.mui-slider-group .mui-slider-item');
+    // 获取屏幕宽度
+    var disX = document.documentElement.offsetWidth;
+    // console.log(disX);
+    oBanner.style.width = len * disX + 'px';
+    // 随屏幕取bannerLi的宽
+    [...oBannerLi].forEach(function (item) {
+        item.style.width = disX + 'px';
+    })
+    var num = 0;
+    var timer = null;
+    timer = setInterval(function () {
+        num++;
+        if (num > len - 1) {
+            num = 0;
+        }
+        oBanner.style.cssText = `transform:translateX(-${num * disX}px);transition:1s ease-in`;
+    }, 2500)
+</script> -->
 
 </html>

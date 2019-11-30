@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>color</title>
+    <title>memory</title>
     <link rel="stylesheet" type="text/css" href="public/css/easyui.css">
     <link rel="stylesheet" type="text/css" href="public/css/icon.css">
     <link rel="stylesheet" type="text/css" href="public/css/text1.css">
@@ -13,7 +13,7 @@
 
 <body>
     <!-- 列表 -->
-    <table id="dg" title="商品颜色" class="easyui-datagrid" style="width:100%;height:99%" toolbar="#toolbar" rownumbers="true"
+    <table id="dg" title="容量" class="easyui-datagrid" style="width:100%;height:99%" toolbar="#toolbar" rownumbers="true"
         fitColumns="true" singleSelect="true">
     </table>
     <!-- 列表上的选项 -->
@@ -29,12 +29,12 @@
         <form id="fm" method="post" novalidate>
             <input type="hidden" name="id" />
             <div class="fitem">
-                <label>商品颜色:</label>
-                <input name="colorName" class="easyui-textbox">
+                <label> 容 量:</label>
+                <input name="name" class="easyui-textbox">
             </div>
             <div class="fitem">
-                <label>商品颜色值:</label>
-                <input name="colorValue" class="easyui-textbox">
+                <label> 备 注:</label>
+                <input name="remark" class="easyui-textbox">
             </div>
         </form>
     </div>
@@ -49,9 +49,9 @@
     <script type="text/javascript" src="public/js/jquery.easyui.min.js"></script>
     <script>
         $(function () {
-            console.log('进入color')
+            console.log('进入memory')
             $('#dg').datagrid({
-                url: '/api/api/color/page',
+                url: '/api/api/memory/page',
                 // 分页默认为false
                 pagination: true,
                 pageList: [5, 9, 14, 20],
@@ -61,13 +61,13 @@
                 columns: [
                     [{
                             // field(对应数据库的名字)
-                            field: 'colorName',
-                            title: '商品颜色',
+                            field: 'name',
+                            title: '容量',
                             width: 30
                         },
                         {
-                            field: 'colorValue',
-                            title: '商品颜色值',
+                            field: 'remark',
+                            title: '备注',
                             width: 30
                         }
                     ]
@@ -75,7 +75,7 @@
                 loadFilter: function (data) {
                     console.log(data)
                     // 将数据库的数据返回到页面，如果没有就返回空数组
-                    return data.data.rows || [];
+                    return data.data || [];
                 }
             })
         });
@@ -85,7 +85,7 @@
             // 打开弹出窗口
             $('#dlg').dialog('open').dialog('setTitle', '新增用户');
             $('#fm').form('clear');
-            url = '/api/api/color/add';
+            url = '/api/api/memory/add';
         }
         // 保存按钮
         function saveUser() {
@@ -117,9 +117,9 @@
         function editUser() {
             var row = $('#dg').datagrid('getSelected'); // 获取当前点击的列的对应数据
             if (row) {
-                $('#dlg').dialog('open').dialog('setTitle', '颜色修改');
+                $('#dlg').dialog('open').dialog('setTitle', '容量修改');
                 $('#fm').form('load', row);
-                url = '/api/api/color/updata';
+                url = '/api/api/memory/updata';
             }
         }
         // 删除按钮
@@ -130,7 +130,7 @@
                 $.messager.defaults.cancel = '取消';
                 $.messager.confirm('删除', '确定要删除此信息?', function (r) {
                     if (r) {
-                        $.post('/api/api/color/delete', {
+                        $.post('/api/api/memory/delete', {
                             id: row.id
                         }, function (result) {
                             if (result.code === 1001) {

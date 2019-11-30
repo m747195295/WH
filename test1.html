@@ -5,16 +5,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>goods</title>
     <link rel="stylesheet" type="text/css" href="public/css/easyui.css">
     <link rel="stylesheet" type="text/css" href="public/css/icon.css">
-    <link rel="stylesheet" href="public/css/text1.css">
+    <link rel="stylesheet" type="text/css" href="public/css/text1.css">
 </head>
 
 <body>
     <!-- 列表 -->
-    <table id="dg" title="商品" class="easyui-datagrid" style="width:100%;height:99%" url="get_users.php"
-        toolbar="#toolbar" rownumbers="true" fitColumns="true" singleSelect="true">
+    <table id="dg" title="商品" class="easyui-datagrid" style="width:100%;height:99%" toolbar="#toolbar" rownumbers="true"
+        fitColumns="true" singleSelect="true">
     </table>
     <!-- 列表上的选项 -->
     <div id="toolbar">
@@ -29,16 +29,33 @@
         <form id="fm" method="post" novalidate>
             <input type="hidden" name="id" />
             <div class="fitem">
-                <label>用户名:</label>
-                <input name="name" class="easyui-textbox" required="true">
+                <label>商品型号:</label>
+                <!-- 必填字段：required="ture"  -->
+                <input name="name" class="easyui-textbox" required="ture">
             </div>
             <div class="fitem">
-                <label> 密 码 :</label>
-                <input name="password" class="easyui-textbox" required="true">
+                <label> 类 型 :</label>
+                <input name="type" class="easyui-textbox" required="ture">
             </div>
             <div class="fitem">
-                <label> 备 注 :</label>
-                <input name="remark" class="easyui-textbox">
+                <label> 价 格 :</label>
+                <input name="price" class="easyui-textbox">
+            </div>
+            <div class="fitem">
+                <label> 概 述 :</label>
+                <input name="saleInfo" class="easyui-textbox">
+            </div>
+            <div class="fitem">
+                <label> 新 品 :</label>
+                <input name="isNew" class="easyui-textbox">
+            </div>
+            <div class="fitem">
+                <label> 促 销 :</label>
+                <input name="isSale" class="easyui-textbox">
+            </div>
+            <div class="fitem">
+                <label> 选 型 :</label>
+                <input name="mid" class="easyui-textbox">
             </div>
         </form>
     </div>
@@ -52,35 +69,134 @@
     <script type="text/javascript" src="public/js/jquery.min.js"></script>
     <script type="text/javascript" src="public/js/jquery.easyui.min.js"></script>
     <script>
+        console.log('222')
         $(function () {
+            console.log('进入goods')
             $('#dg').datagrid({
-                url: '/api/api/color/page',
+                url: '/api/api/goods/page',
                 // 分页默认为false
                 pagination: true,
                 pageList: [5, 9, 14, 20],
                 pageSize: 5,
                 // autoRowHeight:false,
                 // rownumbers:true,
-                columns: [{
-                        // field(对应数据库的名字)
-                        field: 'colorName',
-                        title: '商品颜色',
-                        width: 30
-                    },
-                    {
-                        field: 'colorValue',
-                        title: '商品颜色值',
-                        width: 30
-                    }
+                missingMessage:'不能为空',
+                columns: [
+                    [{
+                            // field(对应数据库的名字)
+                            field: 'name',
+                            title: '商品型号',
+                            width: 30
+                        },
+                        {
+                            field: 'type',
+                            title: '类型',
+                            width: 30
+                        },
+                        {
+                            field: 'price',
+                            title: '价格',
+                            width: 30
+                        },
+                        {
+                            field: 'saleInfo',
+                            title: '概述',
+                            width: 30
+                        },
+                        {
+                            field: 'isNew',
+                            title: '新品',
+                            width: 30
+                        },
+                        {
+                            field: 'isSale',
+                            title: '促销',
+                            width: 30,
+                            // align: 'left',
+                        },
+                        {
+                            field: 'mid',
+                            title: '选型',
+                            width: 30,
+                            // align: 'left',
+                        }
+                    ]
                 ],
                 loadFilter: function (data) {
+                    console.log(data)
                     // 将数据库的数据返回到页面，如果没有就返回空数组
                     return data.data || [];
                 }
             })
-
-        })
+        });
+        // 新增
+        function newUser() {
+            // 打开弹出窗口
+            $('#dlg').dialog('open').dialog('setTitle', '新增用户');
+            $('#fm').form('clear');
+            url = '/api/api/goods/add';
+        }
+        // 保存按钮
+        function saveUser() {
+            $('#fm').form('submit', {
+                // 地址url判断打开是 新增or修改 窗口，传不同的url接口过来
+                url: url,
+                onSubmit: function () {
+                    // 提交数据之前的一个判断
+                    // return $(this).form('validate');
+                },
+                success: function (str) {
+                    var result = JSON.parse(str);
+                    if (result.code !== 1001) {
+                        // 判断有错时返回错误信息
+                        $.messager.show({
+                            title: '提示信息',
+                            msg: result.message
+                        });
+                    } else {
+                        // 1.关闭窗口
+                        $('#dlg').dialog('close');
+                        // 2.刷新列表
+                        $('#dg').datagrid('reload');
+                    }
+                }
+            });
+        }
+        // 修改按钮
+        function editUser() {
+            var row = $('#dg').datagrid('getSelected'); // 获取当前点击的列的对应数据
+            if (row) {
+                $('#dlg').dialog('open').dialog('setTitle', '商品修改');
+                $('#fm').form('load', row);
+                url = '/api/api/goods/updata';
+            }
+        }
+        // 删除按钮
+        function destroyUser() {
+            var row = $('#dg').datagrid('getSelected');
+            if (row) {
+                $.messager.defaults.ok = '确定';
+                $.messager.defaults.cancel = '取消';
+                $.messager.confirm('删除', '确定要删除此信息?', function (r) {
+                    if (r) {
+                        $.post('/api/api/goods/delete', {
+                            id: row.id
+                        }, function (result) {
+                            if (result.code === 1001) {
+                                $('#dg').datagrid('reload'); // reload the user data
+                            } else {
+                                $.messager.show({ // show error message
+                                    title: '提示信息',
+                                    msg: result.message
+                                });
+                            }
+                        }, 'json');
+                    }
+                });
+            }
+        }
     </script>
+
 </body>
 
 </html>

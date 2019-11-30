@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <ul id="list"></ul>
+    <script type="text/javascript" src="public/js/jquery.min.js"></script>
+    <script>
+        var data = [1, 2, 3, 5, 4];
+        (function () {
+            var list = document.getElementById('list');
+           
+            console.log($('#list'))
+            // console.log(list)
+            for (var i = 0; i < data.length; i++) {
+                // list.innerHTML += '<li>' + data[i] + '</li>';;
+            }
+
+        })();
+    </script>
+</body>
+
+</html>

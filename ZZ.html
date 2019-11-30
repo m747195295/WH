@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="public/css/ZZ.css">
+</head>
+
+<body>
+  <ul>
+    <li>KKKKKKKKKKKKK</li>
+    <li>UUUUUUUUUUUUU</li>
+    <li class="btn2">MMMMMMMMMMMMM
+      <P >11111111111111</P>
+      <p>Hello</p>
+    </li>
+    <li>RRRRRRRRRRRRR</li>
+    
+
+  </ul>
+  <script type="text/javascript" src="public/js/jquery.min.js"></script>
+  <script type="text/javascript" src="public/js/jquery.easyui.min.js"></script>
+  <script>
+    $("p").addClass("hover");
+    $(".btn2").hover(
+      function () {
+        console.log($('p'))
+        // $('p').removeClass("hover");
+        $("p").stop().slideDown("slow");
+      },
+      function () {
+        // $('p').addClass("hover");
+        $("p").stop().slideUp("slow");
+      }
+    );
+  </script>
+
+</body>
+
+</html>

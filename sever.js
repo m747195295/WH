@@ -10,7 +10,10 @@ app.use(bodyParser.urlencoded({
 
 // use中间件拦截/api转移
 app.use('/api',require('./port/api'));
-// app.use('/apc',require('./port/index'));
+app.use('/apc',require('./port/apc'));
+
+// app.use('/public',express.static('public'));
+// app.use('/images',require('./public/img/images'));
 
 
 
